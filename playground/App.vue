@@ -45,6 +45,7 @@ const add = () => {
   setCookie(newCookie, {
     path: "/",
     expires: new Date(),
+    secure: true,
   });
   Object.keys(newCookie).forEach((field) => {
     newCookie[field as "key" | "value"] = "";

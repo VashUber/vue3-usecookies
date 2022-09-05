@@ -24,6 +24,7 @@ setCookie(
   {
     path: "/",
     expires: new Date(),
+    secure: true,
   }
 );
 ```
