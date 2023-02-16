@@ -1,11 +1,12 @@
 {
   "name": "vue3-usecookies",
   "private": false,
-  "version": "1.0.3",
+  "version": "1.0.4",
   "type": "module",
   "scripts": {
     "playground": "vite",
-    "build": "vue-tsc --noEmit && vite build"
+    "build": "vue-tsc --noEmit && vite build",
+    "pub": "npm run build && npm publish"
   },
   "files": [
     "dist"
