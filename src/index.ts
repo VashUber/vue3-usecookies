@@ -1,7 +1,7 @@
 import { ref, computed } from "vue";
 import { options } from "./types";
 
-const regexTemplate = "(?<={key}=).*?(?=(;|$))";
+const regexTemplate = "(?<=\b{key}=).*?(?=(;|$))";
 const cookies = ref(document.cookie);
 
 const useCookies = () => {
