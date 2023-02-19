@@ -1,28 +1,24 @@
 import { ref, computed } from "vue";
 import { options } from "./types";
 
-const regexTemplate = "(?<=\b{key}=).*?(?=(;|$))";
 const cookies = ref(document.cookie);
+const getCookie = (key: string) => {
+  const regexTemplate = `(?<=\\b${key}=).*?(?=(;|$))`;
+  const regex = new RegExp(regexTemplate, "gmi");
+
+  return computed(() => cookies.value.match(regex)?.[0]);
+};
+const getCookies = computed(() => {
+  return cookies.value.split("; ").map((cookie) => {
+    const [key, value] = cookie.split("=");
+
+    return {
+      [key]: value,
+    };
+  });
+});
 
 const useCookies = () => {
-  const getCookie = (key: string) =>
-    computed(
-      () =>
-        cookies.value.match(
-          new RegExp(regexTemplate.replace("{key}", key))
-        )?.[0]
-    );
-
-  const getCookies = computed(() => {
-    return cookies.value.split("; ").map((cookie) => {
-      const [key, value] = cookie.split("=");
-
-      return {
-        [key]: value,
-      };
-    });
-  });
-
   const setCookie = (
     payload: {
       key: string;
@@ -38,10 +34,10 @@ const useCookies = () => {
     if (options) {
       Object.keys(options).forEach((option) => {
         const value = options[option as keyof options];
-        newCookie += `; ${option}=${value}`;
+        newCookie += `;${option}=${value}`;
       });
     }
-    document.cookie = newCookie;
+    document.cookie = `${newCookie}`;
     cookies.value = document.cookie;
   };
 
